@@ -1,10 +1,12 @@
 // External Libraries
+import { Project } from 'src/modules/projects/entities/project.entity'
 import {
   Entity,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  OneToMany
 } from 'typeorm'
 
 // Entities
@@ -28,4 +30,7 @@ export class User {
 
   @UpdateDateColumn()
   updated_at: Date
+
+  @OneToMany(() => Project, project => project.user)
+  projects: Project[]
 }

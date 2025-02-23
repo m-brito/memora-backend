@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 // Entites
 import { AuthModule } from './auth/auth.module'
 import { UsersModule } from './modules/users/users.module'
+import { ProjectsModule } from './modules/projects/projects.module'
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { UsersModule } from './modules/users/users.module'
       logging: true
     }),
     AuthModule,
-    UsersModule
+    UsersModule,
+    ProjectsModule
   ],
   controllers: [],
   providers: []
