@@ -1,6 +1,9 @@
 // External Libraries
 import { DataSource } from 'typeorm'
 
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 const AppDataSource = new DataSource({
   type: 'postgres',
   host: process.env.DB_HOST,
@@ -11,7 +14,7 @@ const AppDataSource = new DataSource({
   entities: ['dist/**/*.entity.js'],
   migrations: ['src/migrations/*.js'],
   synchronize: false,
-  ssl: false,
+  ssl: process.env.DB_SSL === 'true' ? true : false,
   logging: true
 })
 

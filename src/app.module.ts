@@ -21,7 +21,7 @@ import { UsersModule } from './modules/users/users.module'
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
-      synchronize: false, // Tirar em prod
+      synchronize: true, // Tirar em prod
       ssl: false,
       logging: true
     }),
