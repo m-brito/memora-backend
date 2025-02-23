@@ -1,6 +1,11 @@
+// External Libraries
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
+
+// Entites
+import { AuthModule } from './auth/auth.module'
+import { UsersModule } from './modules/users/users.module'
 
 @Module({
   imports: [
@@ -16,12 +21,12 @@ import { TypeOrmModule } from '@nestjs/typeorm'
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
-      synchronize: true, // Tirar em prod
-      ssl: {
-        rejectUnauthorized: false
-      },
+      synchronize: false, // Tirar em prod
+      ssl: false,
       logging: true
-    })
+    }),
+    AuthModule,
+    UsersModule
   ],
   controllers: [],
   providers: []

@@ -2,12 +2,12 @@
 import { AppModule } from './app.module'
 import { NestFactory } from '@nestjs/core'
 
-// import { AllExceptionsFilter } from './shareds/filters/all-exceptions.filter'
+import { AllExceptionsFilter } from './shareds/filters'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  // app.useGlobalFilters(new AllExceptionsFilter())
+  app.useGlobalFilters(new AllExceptionsFilter())
   app.enableCors()
 
   if (process.env.VERCEL) {

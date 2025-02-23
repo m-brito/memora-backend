@@ -9,9 +9,7 @@ module.exports = {
   logging: true,
   entities: ['dist/**/*.entity.js'],
   migrations: ['dist/migrations/*.js'],
-  ssl: {
-    rejectUnauthorized: false
-  },
+  ssl: false,
   cli: {
     migrationsDir: 'src/migrations'
   }
