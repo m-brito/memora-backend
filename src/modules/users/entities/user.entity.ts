@@ -3,14 +3,13 @@ import { Project } from 'src/modules/projects/entities/project.entity'
 import {
   Entity,
   Column,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryGeneratedColumn,
-  OneToMany
+  PrimaryGeneratedColumn
 } from 'typeorm'
 
 // Entities
-
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn()

@@ -14,7 +14,7 @@ import { User } from '@users/entities/user.entity'
 @Entity('projects')
 export class Project {
   @PrimaryGeneratedColumn()
-  id: number
+  id?: number
 
   @Column()
   name: string

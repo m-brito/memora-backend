@@ -14,9 +14,10 @@ import { ProjectsService } from './services'
 
 // Repositories
 import { ProjectsRepository } from './repositories'
+import { UsersModule } from '../users/users.module'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Project])],
+  imports: [TypeOrmModule.forFeature([Project]), UsersModule],
   providers: [
     ProjectsService,
     {
