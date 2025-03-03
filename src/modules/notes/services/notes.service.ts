@@ -60,8 +60,8 @@ export class NotesService {
     const notes = await this.noteRepository.find({
       relations: ['user', 'project', 'type']
     })
-    const teste = notes.map(note => toNoteDto(note))
-    return teste
+    const allNotes = notes.map(note => toNoteDto(note))
+    return allNotes
   }
 
   async findOne(id: number): Promise<NoteDto> {
@@ -95,7 +95,6 @@ export class NotesService {
       type: type,
       project: project
     }
-    console.log(newNote)
     await this.noteRepository.update(id, newNote)
     const note = await this.noteRepository.findOne({ where: { id } })
     return toNoteDto(note)
