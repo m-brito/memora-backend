@@ -25,6 +25,34 @@
       "@users/repositories/*": ["src/modules/users/repositories/*"],
       "@users/tests/*": ["src/modules/users/tests/*"],
 
+      "@projects/dtos/*": ["src/modules/projects/dtos/*"],
+      "@projects/entities/*": ["src/modules/projects/entities/*"],
+      "@projects/controllers/*": ["src/modules/projects/controllers/*"],
+      "@projects/services/*": ["src/modules/projects/services/*"],
+      "@projects/repositories/*": ["src/modules/projects/repositories/*"],
+      "@projects/tests/*": ["src/modules/projects/tests/*"],
+
+      "@feedbacks/dtos/*": ["src/modules/feedbacks/dtos/*"],
+      "@feedbacks/entities/*": ["src/modules/feedbacks/entities/*"],
+      "@feedbacks/controllers/*": ["src/modules/feedbacks/controllers/*"],
+      "@feedbacks/services/*": ["src/modules/feedbacks/services/*"],
+      "@feedbacks/repositories/*": ["src/modules/feedbacks/repositories/*"],
+      "@feedbacks/tests/*": ["src/modules/feedbacks/tests/*"],
+
+      "@notes/dtos/*": ["src/modules/notes/dtos/*"],
+      "@notes/entities/*": ["src/modules/notes/entities/*"],
+      "@notes/controllers/*": ["src/modules/notes/controllers/*"],
+      "@notes/services/*": ["src/modules/notes/services/*"],
+      "@notes/repositories/*": ["src/modules/notes/repositories/*"],
+      "@notes/tests/*": ["src/modules/notes/tests/*"],
+
+      "@types/dtos/*": ["src/modules/types/dtos/*"],
+      "@types/entities/*": ["src/modules/types/entities/*"],
+      "@types/controllers/*": ["src/modules/types/controllers/*"],
+      "@types/services/*": ["src/modules/types/services/*"],
+      "@types/repositories/*": ["src/modules/types/repositories/*"],
+      "@types/tests/*": ["src/modules/types/tests/*"],
+
       "@shared/*": ["src/shared/*"],
       "@filters/*": ["src/shared/filters/*"],
 
@@ -33,7 +61,7 @@
       "@auth/types/*": ["src/auth/types/*"],
       "@auth/services/*": ["src/auth/services/*"],
       "@auth/controllers*": ["src/auth/controllers*"],
-      "@auth/strategies/*": ["src/auth/strategies/*"],
+      "@auth/strategies/*": ["src/auth/strategies/*"]
     }
   }
 }

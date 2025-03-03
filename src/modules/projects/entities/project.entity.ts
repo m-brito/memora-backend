@@ -3,13 +3,16 @@ import {
   Entity,
   Column,
   ManyToOne,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
   PrimaryGeneratedColumn
 } from 'typeorm'
 
 // Entities
+import { Note } from 'src/modules/notes/entities'
 import { User } from '@users/entities/user.entity'
+import { Feedback } from 'src/modules/feedbacks/entities'
 
 @Entity('projects')
 export class Project {
@@ -33,4 +36,10 @@ export class Project {
     onDelete: 'SET NULL'
   })
   user: User
+
+  @OneToMany(() => Note, note => note.project)
+  notes: Note[]
+
+  @OneToMany(() => Feedback, feedback => feedback.project)
+  feedbacks: Feedback[]
 }

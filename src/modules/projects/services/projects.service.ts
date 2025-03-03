@@ -37,7 +37,9 @@ export class ProjectsService {
       user,
       created_at: new Date(),
       updated_at: new Date(),
-      acronym: createProjectDto.acronym
+      acronym: createProjectDto.acronym,
+      notes: [],
+      feedbacks: []
     }
 
     this.projectsRepository.create(project)
