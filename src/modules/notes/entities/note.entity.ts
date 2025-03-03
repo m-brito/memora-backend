@@ -14,6 +14,9 @@ export class Note {
   @Column({ type: 'text' })
   text: string
 
+  @Column({ type: 'text' })
+  textMarkdown: string
+
   @ManyToOne(() => Type, type => type.notes, {
     eager: true,
     onDelete: 'CASCADE'

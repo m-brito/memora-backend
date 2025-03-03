@@ -81,8 +81,8 @@ export class NotesService {
 
     const [user, project, type] = await Promise.all([
       this.userRepository.findOneBy({ id: idLogged }),
-      this.projectRepository.findOneBy({ id: updateNoteDto.projectId }),
-      this.typeRepository.findOneBy({ id: updateNoteDto.typeId })
+      this.typeRepository.findOneBy({ id: updateNoteDto.typeId }),
+      this.projectRepository.findOneBy({ id: updateNoteDto.projectId })
     ])
 
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND)
@@ -92,6 +92,7 @@ export class NotesService {
     const newNote = {
       user: user,
       text: updateNoteDto.text,
+      textMarkdown: updateNoteDto.textMarkdown,
       type: type,
       project: project
     }
