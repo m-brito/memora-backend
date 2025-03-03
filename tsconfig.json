@@ -53,13 +53,6 @@
       "@types/repositories/*": ["src/modules/types/repositories/*"],
       "@types/tests/*": ["src/modules/types/tests/*"],
 
-      "@roles/dtos/*": ["src/modules/roles/dtos/*"],
-      "@roles/entities/*": ["src/modules/roles/entities/*"],
-      "@roles/controllers/*": ["src/modules/roles/controllers/*"],
-      "@roles/services/*": ["src/modules/roles/services/*"],
-      "@roles/repositories/*": ["src/modules/roles/repositories/*"],
-      "@roles/tests/*": ["src/modules/roles/tests/*"],
-
       "@shared/*": ["src/shared/*"],
       "@filters/*": ["src/shared/filters/*"],
 

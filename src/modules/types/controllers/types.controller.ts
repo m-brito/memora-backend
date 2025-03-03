@@ -22,7 +22,7 @@ import { CreateTypeDto } from '../dtos'
 
 @Controller('types')
 @UseGuards(JwtAuthGuard, WithAuthenticationGuard)
-@withAuthentication()
+@withAuthentication('ADMIN', 'USER')
 export class TypesController {
   constructor(private readonly typesService: TypesService) {}
 

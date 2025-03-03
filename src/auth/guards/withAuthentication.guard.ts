@@ -31,9 +31,7 @@ export class WithAuthenticationGuard implements CanActivate {
       throw new ForbiddenException('User not authenticated')
     }
 
-    const hasRole = requiredRoles.some(role =>
-      user.roles.map(r => r.toUpperCase()).includes(role.toUpperCase())
-    )
+    const hasRole = requiredRoles.includes(user.role.toUpperCase())
     if (!hasRole) {
       throw new ForbiddenException('Access denied: Insufficient permissions')
     }
