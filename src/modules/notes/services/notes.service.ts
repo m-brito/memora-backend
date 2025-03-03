@@ -102,6 +102,9 @@ export class NotesService {
   }
 
   async remove(id: number): Promise<void> {
+    const note = await this.noteRepository.findOne({ where: { id } })
+    if (!note) throw new HttpException('Note not found', HttpStatus.NOT_FOUND)
+
     await this.noteRepository.delete(id)
   }
 }
