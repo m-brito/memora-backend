@@ -15,8 +15,18 @@ import { NotesService } from './services'
 // Repositories
 import { NotesRepository } from './repositories'
 
+// Utils
+import { UsersModule } from '../users/users.module'
+import { TypesModule } from '../types/types.module'
+import { ProjectsModule } from '../projects/projects.module'
+
 @Module({
-  imports: [TypeOrmModule.forFeature([Note])],
+  imports: [
+    TypeOrmModule.forFeature([Note]),
+    UsersModule,
+    TypesModule,
+    ProjectsModule
+  ],
   providers: [
     NotesService,
     {

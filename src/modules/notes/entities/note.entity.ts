@@ -9,17 +9,26 @@ import { Project } from 'src/modules/projects/entities'
 @Entity('notes')
 export class Note {
   @PrimaryGeneratedColumn()
-  id: number
+  id?: number
 
   @Column({ type: 'text' })
   text: string
 
-  @ManyToOne(() => Type, type => type.notes, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Type, type => type.notes, {
+    eager: true,
+    onDelete: 'CASCADE'
+  })
   type: Type
 
-  @ManyToOne(() => Project, project => project.notes, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Project, project => project.notes, {
+    eager: true,
+    onDelete: 'CASCADE'
+  })
   project: Project
 
-  @ManyToOne(() => User, user => user.notes, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, user => user.notes, {
+    eager: true,
+    onDelete: 'CASCADE'
+  })
   user: User
 }

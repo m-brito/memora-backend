@@ -32,11 +32,13 @@ export class TypesController {
   }
 
   @Get()
+  @withAuthentication('ADMIN', 'USER')
   findAll() {
     return this.typesService.findAll()
   }
 
   @Get(':id')
+  @withAuthentication('ADMIN', 'USER')
   findOne(@Param('id') id: number) {
     return this.typesService.findOne(id)
   }

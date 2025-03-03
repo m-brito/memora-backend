@@ -33,6 +33,7 @@ export class Project {
 
   @ManyToOne(() => User, user => user.projects, {
     nullable: true,
+    eager: true,
     onDelete: 'SET NULL'
   })
   user: User

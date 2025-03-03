@@ -14,6 +14,8 @@ import { ProjectsService } from './services'
 
 // Repositories
 import { ProjectsRepository } from './repositories'
+
+// Utils
 import { UsersModule } from '../users/users.module'
 
 @Module({
