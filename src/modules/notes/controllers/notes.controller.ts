@@ -7,7 +7,8 @@ import {
   Param,
   Delete,
   UseGuards,
-  Controller
+  Controller,
+  Patch
 } from '@nestjs/common'
 
 // Utils
@@ -52,6 +53,15 @@ export class NotesController {
     @CurrentUser() user: UserLoggedDto
   ) {
     return this.notesService.update(id, user, updateNoteDto)
+  }
+
+  @Patch(':id')
+  patchUpdate(
+    @Param('id') id: number,
+    @Body() updateNoteDto: Partial<CreateNoteDto>,
+    @CurrentUser() user: UserLoggedDto
+  ) {
+    return this.notesService.patchUpdate(id, user, updateNoteDto)
   }
 
   @Delete(':id')

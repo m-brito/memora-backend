@@ -101,6 +101,40 @@ export class NotesService {
     return toNoteDto(note)
   }
 
+  async patchUpdate(
+    id: number,
+    userLogged: UserLoggedDto,
+    updateNoteDto: Partial<CreateNoteDto>
+  ): Promise<NoteDto> {
+    const idLogged = userLogged.userId
+
+    const [user, project, type, note] = await Promise.all([
+      this.userRepository.findOneBy({ id: idLogged }),
+      this.projectRepository.findOneBy({ id: updateNoteDto.projectId }),
+      this.typeRepository.findOneBy({ id: updateNoteDto.typeId }),
+      this.noteRepository.findOne({ where: { id } })
+    ])
+
+    if (!note) throw new HttpException('Note not found', HttpStatus.NOT_FOUND)
+    if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND)
+    if (!project)
+      throw new HttpException('Project not found', HttpStatus.NOT_FOUND)
+    if (!type) throw new HttpException('Type not found', HttpStatus.NOT_FOUND)
+
+    const updatedNote = {
+      ...note,
+      text: updateNoteDto.text ?? note.text,
+      textMarkdown: updateNoteDto.textMarkdown ?? note.textMarkdown,
+      type: type ?? note.type,
+      project: project ?? note.project
+    }
+
+    await this.noteRepository.update(id, updatedNote)
+
+    const savedNote = await this.noteRepository.findOne({ where: { id } })
+    return toNoteDto(savedNote)
+  }
+
   async remove(id: number): Promise<void> {
     const note = await this.noteRepository.findOne({ where: { id } })
     if (!note) throw new HttpException('Note not found', HttpStatus.NOT_FOUND)

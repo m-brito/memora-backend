@@ -14,6 +14,7 @@ export function toNoteDto(note: Note): NoteDto {
     id: note.id,
     project: toProjectDto(note.project),
     text: note.text,
+    textMarkdown: note.textMarkdown,
     type: toTypeDto(note.type),
     user: toUserDto(note.user)
   }

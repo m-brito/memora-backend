@@ -6,6 +6,7 @@ import { ProjectDto } from '@projects/dtos/project.dto'
 export interface NoteDto {
   id: number
   text: string
+  textMarkdown: string
   type: TypeDto
   user: UserDto
   project: ProjectDto
