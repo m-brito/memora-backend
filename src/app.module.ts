@@ -10,6 +10,9 @@ import { TypesModule } from './modules/types/types.module'
 import { NotesModule } from './modules/notes/notes.module'
 import { ProjectsModule } from './modules/projects/projects.module'
 import { FeedbacksModule } from './modules/feedbacks/feedbacks.module'
+import { RolesService } from './modules/roles/services/roles.service'
+import { RolesController } from './modules/roles/controllers/roles.controller'
+import { RolesModule } from './modules/roles/roles.module'
 
 @Module({
   imports: [
@@ -33,10 +36,11 @@ import { FeedbacksModule } from './modules/feedbacks/feedbacks.module'
     UsersModule,
     NotesModule,
     TypesModule,
+    RolesModule,
     ProjectsModule,
     FeedbacksModule
   ],
-  controllers: [],
-  providers: []
+  controllers: [RolesController],
+  providers: [RolesService]
 })
 export class AppModule {}

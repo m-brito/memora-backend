@@ -3,13 +3,16 @@ import {
   Entity,
   Column,
   OneToMany,
+  ManyToMany,
   CreateDateColumn,
   UpdateDateColumn,
-  PrimaryGeneratedColumn
+  PrimaryGeneratedColumn,
+  JoinTable
 } from 'typeorm'
 
 // Entities
 import { Note } from 'src/modules/notes/entities'
+import { Role } from 'src/modules/roles/entities'
 import { Project } from 'src/modules/projects/entities'
 import { Feedback } from 'src/modules/feedbacks/entities'
 
@@ -44,4 +47,8 @@ export class User {
 
   @OneToMany(() => Feedback, feedback => feedback.receiver)
   receivedFeedbacks: Feedback[]
+
+  @ManyToMany(() => Role, role => role.users)
+  @JoinTable({ name: 'user_roles' })
+  roles: Role[]
 }

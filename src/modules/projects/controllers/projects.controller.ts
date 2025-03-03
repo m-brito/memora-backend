@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common'
 import { JwtAuthGuard } from 'src/auth/guards'
 
-// Decorators
-import { CurrentUser } from 'src/auth/decorators'
+// Utils
+import { CurrentUser, withAuthentication } from 'src/auth/decorators'
 
 // Entities
 import { Project } from '../entities'
@@ -26,6 +26,7 @@ import { CreateProjectDto, ProjectDto, UpdateProjectDto } from '../dtos'
 
 @Controller('projects')
 @UseGuards(JwtAuthGuard)
+@withAuthentication()
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
