@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common'
 
 // Auth
-import { JwtAuthGuard } from 'src/auth/guards'
+import { JwtAuthGuard, WithAuthenticationGuard } from 'src/auth/guards'
 
 // Entities
 import { User } from 'src/modules/users/entities'
@@ -28,9 +28,11 @@ import { PaginatedResult } from 'src/utils/types'
 // Dtos
 import { UserDto } from '@users/dtos/user.dto'
 import { CreateUserDto } from '@users/dtos/create-user.dto'
+import { withAuthentication } from 'src/auth/decorators'
 
 @Controller('users')
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, WithAuthenticationGuard)
+@withAuthentication('ADMIN', 'USER')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

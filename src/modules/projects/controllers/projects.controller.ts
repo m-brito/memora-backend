@@ -26,7 +26,7 @@ import { CreateProjectDto, ProjectDto, UpdateProjectDto } from '../dtos'
 
 @Controller('projects')
 @UseGuards(JwtAuthGuard)
-@withAuthentication()
+@withAuthentication('ADMIN', 'USER')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
