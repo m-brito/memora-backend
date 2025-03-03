@@ -32,13 +32,12 @@ export class NotesService {
     createNoteDto: CreateNoteDto
   ): Promise<Note> {
     const idLogged = userLogged.userId
-    const user = await this.userRepository.findOneBy({ id: idLogged })
-    const project = await this.projectRepository.findOneBy({
-      id: createNoteDto.projectId
-    })
-    const type = await this.typeRepository.findOneBy({
-      id: createNoteDto.typeId
-    })
+
+    const [user, project, type] = await Promise.all([
+      this.userRepository.findOneBy({ id: idLogged }),
+      this.projectRepository.findOneBy({ id: createNoteDto.projectId }),
+      this.typeRepository.findOneBy({ id: createNoteDto.typeId })
+    ])
 
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND)
     if (!project)
@@ -79,13 +78,12 @@ export class NotesService {
     updateNoteDto: CreateNoteDto
   ): Promise<NoteDto> {
     const idLogged = userLogged.userId
-    const user = await this.userRepository.findOneBy({ id: idLogged })
-    const project = await this.projectRepository.findOneBy({
-      id: updateNoteDto.projectId
-    })
-    const type = await this.typeRepository.findOneBy({
-      id: updateNoteDto.typeId
-    })
+
+    const [user, project, type] = await Promise.all([
+      this.userRepository.findOneBy({ id: idLogged }),
+      this.projectRepository.findOneBy({ id: updateNoteDto.projectId }),
+      this.typeRepository.findOneBy({ id: updateNoteDto.typeId })
+    ])
 
     if (!user) throw new HttpException('User not found', HttpStatus.NOT_FOUND)
     if (!project)
