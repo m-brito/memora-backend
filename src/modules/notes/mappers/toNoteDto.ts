@@ -12,9 +12,9 @@ import { NoteDto } from '@notes/dtos/note.dto'
 export function toNoteDto(note: Note): NoteDto {
   return {
     id: note.id,
-    project: toProjectDto(note.project),
     text: note.text,
     textMarkdown: note.textMarkdown,
+    project: toProjectDto(note.project),
     type: toTypeDto(note.type),
     user: toUserDto(note.user)
   }
