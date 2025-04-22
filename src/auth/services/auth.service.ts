@@ -6,6 +6,7 @@ import { Injectable } from '@nestjs/common'
 
 // Services
 import { UsersService } from '@users/services/users.service'
+import { UserDto } from '@users/dtos/user.dto'
 
 @Injectable()
 export class AuthService {
@@ -16,8 +17,9 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.usersService.findByEmail(email)
+    const comparedPassword = await bcrypt.compare(password, user.password)
 
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (user && comparedPassword) {
       const { password, ...result } = user
       return result
     }
@@ -25,8 +27,15 @@ export class AuthService {
     return null
   }
 
-  async login(user: any) {
-    const payload = { sub: user.id, email: user.email, role: user.role }
+  async login(user: UserDto) {
+    const payload = {
+      sub: user.id,
+      role: user.role,
+      name: user.name,
+      email: user.email,
+      created_at: user.created_at,
+      updated_at: user.updated_at
+    }
     return {
       access_token: this.jwtService.sign(payload)
     }

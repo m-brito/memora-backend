@@ -8,7 +8,6 @@ import { toUserDto } from 'src/modules/users/mappers'
 import { ProjectDto } from '../dtos'
 
 export function toProjectDto(project: Project): ProjectDto {
-  console.log(project)
   return {
     id: project.id,
     name: project.name,
