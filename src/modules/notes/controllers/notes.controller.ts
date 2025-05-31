@@ -37,6 +37,7 @@ export class NotesController {
   }
 
   @Get()
+  @withAuthentication('ADMIN')
   findAll() {
     return this.notesService.findAll()
   }
@@ -44,6 +45,15 @@ export class NotesController {
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.notesService.findOne(id)
+  }
+
+  @Get('project/:projectId')
+  @withAuthentication('ADMIN')
+  findByProject(
+    @CurrentUser() user: UserLoggedDto,
+    @Param('projectId') projectId: number
+  ) {
+    return this.notesService.findByProject(user, projectId)
   }
 
   @Put(':id')

@@ -47,6 +47,8 @@ export class NotesService {
     let note = new Note()
     note = {
       ...createNoteDto,
+      text: '',
+      textMarkdown: '',
       user,
       project,
       type
@@ -70,6 +72,21 @@ export class NotesService {
       relations: ['user', 'project', 'type']
     })
     return toNoteDto(note)
+  }
+
+  async findByProject(
+    userLogged: UserLoggedDto,
+    projectId: number
+  ): Promise<NoteDto[]> {
+    const notes = await this.noteRepository.find({
+      relations: ['user', 'project', 'type'],
+      where: {
+        project: { id: projectId },
+        user: { id: userLogged.userId }
+      }
+    })
+    const allNotes = notes.map(note => toNoteDto(note))
+    return allNotes
   }
 
   async update(
