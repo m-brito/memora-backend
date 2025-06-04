@@ -4,7 +4,7 @@ import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 // Entities
-import { Project } from './entities'
+import { Project, ProjectUser } from './entities'
 
 // Controllers
 import { ProjectsController } from './controllers'
@@ -13,13 +13,12 @@ import { ProjectsController } from './controllers'
 import { ProjectsService } from './services'
 
 // Repositories
-import { ProjectsRepository } from './repositories'
+import { ProjectsRepository, ProjectsUserRepository } from './repositories'
 
 // Utils
 import { UsersModule } from '../users/users.module'
-
 @Module({
-  imports: [TypeOrmModule.forFeature([Project]), UsersModule],
+  imports: [TypeOrmModule.forFeature([Project, ProjectUser]), UsersModule],
   providers: [
     ProjectsService,
     {
@@ -27,9 +26,15 @@ import { UsersModule } from '../users/users.module'
       useFactory: (dataSource: DataSource) =>
         new ProjectsRepository(dataSource),
       inject: [DataSource]
+    },
+    {
+      provide: ProjectsUserRepository,
+      useFactory: (dataSource: DataSource) =>
+        new ProjectsUserRepository(dataSource),
+      inject: [DataSource]
     }
   ],
   controllers: [ProjectsController],
-  exports: [ProjectsService, ProjectsRepository]
+  exports: [ProjectsService, ProjectsRepository, ProjectsUserRepository]
 })
 export class ProjectsModule {}

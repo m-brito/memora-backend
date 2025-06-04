@@ -22,7 +22,12 @@ import { ProjectsService } from '../services/projects.service'
 
 // Types
 import { UserLoggedDto } from 'src/auth/dto'
-import { CreateProjectDto, ProjectDto, UpdateProjectDto } from '../dtos'
+import {
+  CreateProjectDto,
+  ProjectDto,
+  ShareProjectDto,
+  UpdateProjectDto
+} from '../dtos'
 
 @Controller('projects')
 @UseGuards(JwtAuthGuard, WithAuthenticationGuard)
@@ -38,26 +43,44 @@ export class ProjectsController {
     return this.projectsService.create(user, createProjectDto)
   }
 
+  @Post('/share/:id')
+  async shareProject(
+    @Param('id') id: number,
+    @Body() shareProject: ShareProjectDto,
+    @CurrentUser() user: UserLoggedDto
+  ): Promise<ProjectDto> {
+    return this.projectsService.shareProject(user, id, shareProject)
+  }
+
   @Get()
-  async findAll(): Promise<Project[]> {
-    return this.projectsService.findAll()
+  async findAllByUser(
+    @CurrentUser() user: UserLoggedDto
+  ): Promise<ProjectDto[]> {
+    return this.projectsService.findAllByUser(user)
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<Project> {
-    return this.projectsService.findOne(id)
+  async findOne(
+    @CurrentUser() user: UserLoggedDto,
+    @Param('id') id: number
+  ): Promise<Project> {
+    return this.projectsService.findOne(user, id)
   }
 
   @Put(':id')
   async update(
+    @CurrentUser() user: UserLoggedDto,
     @Param('id') id: number,
     @Body() updateProjectDto: UpdateProjectDto
   ): Promise<Project> {
-    return this.projectsService.update(id, updateProjectDto)
+    return this.projectsService.update(user, id, updateProjectDto)
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: number): Promise<void> {
-    return this.projectsService.delete(id)
+  async delete(
+    @CurrentUser() user: UserLoggedDto,
+    @Param('id') id: number
+  ): Promise<void> {
+    return this.projectsService.delete(user, id)
   }
 }

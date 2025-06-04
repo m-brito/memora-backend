@@ -48,7 +48,7 @@ export class NotesController {
   }
 
   @Get('project/:projectId')
-  @withAuthentication('ADMIN')
+  @withAuthentication('ADMIN', 'USER')
   findByProject(
     @CurrentUser() user: UserLoggedDto,
     @Param('projectId') projectId: number

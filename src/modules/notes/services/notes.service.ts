@@ -81,8 +81,7 @@ export class NotesService {
     const notes = await this.noteRepository.find({
       relations: ['user', 'project', 'type'],
       where: {
-        project: { id: projectId },
-        user: { id: userLogged.userId }
+        project: { id: projectId }
       }
     })
     const allNotes = notes.map(note => toNoteDto(note))

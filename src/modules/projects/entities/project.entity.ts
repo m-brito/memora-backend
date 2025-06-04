@@ -13,6 +13,7 @@ import {
 import { Note } from 'src/modules/notes/entities'
 import { User } from '@users/entities/user.entity'
 import { Feedback } from 'src/modules/feedbacks/entities'
+import { ProjectUser } from './project_user.entity'
 
 @Entity('projects')
 export class Project {
@@ -43,4 +44,7 @@ export class Project {
 
   @OneToMany(() => Feedback, feedback => feedback.project)
   feedbacks: Feedback[]
+
+  @OneToMany(() => ProjectUser, projectUser => projectUser.project, {})
+  projectUsers: ProjectUser[]
 }

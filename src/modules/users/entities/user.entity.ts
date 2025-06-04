@@ -12,6 +12,7 @@ import {
 import { Note } from 'src/modules/notes/entities'
 import { Project } from 'src/modules/projects/entities'
 import { Feedback } from 'src/modules/feedbacks/entities'
+import { ProjectUser } from '@projects/entities/project_user.entity'
 
 @Entity('users')
 export class User {
@@ -47,4 +48,7 @@ export class User {
 
   @Column({ default: 'USER' })
   role: string
+
+  @OneToMany(() => ProjectUser, projectUser => projectUser.project)
+  projectUsers: ProjectUser[]
 }
