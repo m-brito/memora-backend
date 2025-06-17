@@ -18,7 +18,8 @@ import {
   CreateProjectDto,
   ProjectDto,
   ShareProjectDto,
-  Permission
+  Permission,
+  MembersDto
 } from '../dtos'
 
 @Injectable()
@@ -113,6 +114,41 @@ export class ProjectsService {
     await this.projectUserRepository.save(projectUser)
 
     return toProjectDto(project)
+  }
+  async findMembers(
+    projectId: number,
+    userLogged: UserLoggedDto
+  ): Promise<MembersDto[]> {
+    const project = await this.projectsRepository.findOne({
+      where: [
+        {
+          id: projectId,
+          user: { id: userLogged.userId }
+        },
+        {
+          id: projectId,
+          projectUsers: {
+            user: { id: userLogged.userId }
+          }
+        }
+      ],
+      relations: ['user', 'projectUsers', 'projectUsers.user']
+    })
+
+    if (project.user.id !== userLogged.userId) {
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED)
+    }
+
+    if (!project) {
+      throw new HttpException('Project not found', HttpStatus.NOT_FOUND)
+    }
+
+    const members = project.projectUsers.map(projectUser => ({
+      id: projectUser.user.id,
+      name: projectUser.user.name
+    }))
+
+    return members
   }
 
   async findAll(): Promise<Project[]> {

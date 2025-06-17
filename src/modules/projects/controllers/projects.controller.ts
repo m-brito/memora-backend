@@ -24,6 +24,7 @@ import { ProjectsService } from '../services/projects.service'
 import { UserLoggedDto } from 'src/auth/dto'
 import {
   CreateProjectDto,
+  MembersDto,
   ProjectDto,
   ShareProjectDto,
   UpdateProjectDto
@@ -50,6 +51,14 @@ export class ProjectsController {
     @CurrentUser() user: UserLoggedDto
   ): Promise<ProjectDto> {
     return this.projectsService.shareProject(user, id, shareProject)
+  }
+
+  @Get(':id/members')
+  async findMembers(
+    @Param('id') id: number,
+    @CurrentUser() user: UserLoggedDto
+  ): Promise<MembersDto[]> {
+    return this.projectsService.findMembers(id, user)
   }
 
   @Get()
