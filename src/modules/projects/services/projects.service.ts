@@ -151,6 +151,65 @@ export class ProjectsService {
     return members
   }
 
+  async exit(
+    projectId: number,
+    userLogged: UserLoggedDto
+  ): Promise<MembersDto[]> {
+    const project = await this.projectsRepository.findOne({
+      where: [
+        {
+          id: projectId,
+          user: { id: userLogged.userId }
+        },
+        {
+          id: projectId,
+          projectUsers: {
+            user: { id: userLogged.userId }
+          }
+        }
+      ],
+      relations: ['user', 'projectUsers', 'projectUsers.user']
+    })
+
+    if (!project) {
+      throw new HttpException('Project not found', HttpStatus.NOT_FOUND)
+    }
+
+    const isOwner = project.user.id === userLogged.userId
+
+    if (isOwner) {
+      throw new HttpException(
+        'Project owner cannot exit the project',
+        HttpStatus.FORBIDDEN
+      )
+    }
+
+    const projectUser = await this.projectUserRepository.findOne({
+      where: {
+        project: { id: projectId },
+        user: { id: userLogged.userId }
+      }
+    })
+
+    if (!projectUser) {
+      throw new HttpException(
+        'User is not a member of this project',
+        HttpStatus.NOT_FOUND
+      )
+    }
+
+    await this.projectUserRepository.delete(projectUser.id)
+
+    const updatedMembers = project.projectUsers
+      .filter(pu => pu.user.id !== userLogged.userId)
+      .map(pu => ({
+        id: pu.user.id,
+        name: pu.user.name
+      }))
+
+    return updatedMembers
+  }
+
   async findAll(): Promise<Project[]> {
     return await this.projectsRepository.find({
       relations: ['user']

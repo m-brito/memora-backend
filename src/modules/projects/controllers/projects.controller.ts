@@ -61,6 +61,14 @@ export class ProjectsController {
     return this.projectsService.findMembers(id, user)
   }
 
+  @Post(':id/exit')
+  async exit(
+    @Param('id') id: number,
+    @CurrentUser() user: UserLoggedDto
+  ): Promise<MembersDto[]> {
+    return this.projectsService.exit(id, user)
+  }
+
   @Get()
   async findAllByUser(
     @CurrentUser() user: UserLoggedDto
