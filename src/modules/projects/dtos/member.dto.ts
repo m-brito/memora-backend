@@ -1,4 +1,5 @@
 export class MembersDto {
   id: number
-  name?: string
+  name: string
+  email: string
 }

@@ -18,9 +18,10 @@ import {
   CreateProjectDto,
   ProjectDto,
   ShareProjectDto,
-  Permission,
-  MembersDto
+  Permission
 } from '../dtos'
+import { toUserDto } from 'src/modules/users/mappers'
+import { UserDto } from '@users/dtos/user.dto'
 
 @Injectable()
 export class ProjectsService {
@@ -118,7 +119,7 @@ export class ProjectsService {
   async findMembers(
     projectId: number,
     userLogged: UserLoggedDto
-  ): Promise<MembersDto[]> {
+  ): Promise<UserDto[]> {
     const project = await this.projectsRepository.findOne({
       where: [
         {
@@ -135,26 +136,18 @@ export class ProjectsService {
       relations: ['user', 'projectUsers', 'projectUsers.user']
     })
 
-    if (project.user.id !== userLogged.userId) {
-      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED)
-    }
-
     if (!project) {
       throw new HttpException('Project not found', HttpStatus.NOT_FOUND)
     }
 
-    const members = project.projectUsers.map(projectUser => ({
-      id: projectUser.user.id,
-      name: projectUser.user.name
-    }))
+    const members = project.projectUsers.map(projectUser =>
+      toUserDto(projectUser.user)
+    )
 
     return members
   }
 
-  async exit(
-    projectId: number,
-    userLogged: UserLoggedDto
-  ): Promise<MembersDto[]> {
+  async exit(projectId: number, userLogged: UserLoggedDto): Promise<UserDto[]> {
     const project = await this.projectsRepository.findOne({
       where: [
         {
@@ -202,10 +195,7 @@ export class ProjectsService {
 
     const updatedMembers = project.projectUsers
       .filter(pu => pu.user.id !== userLogged.userId)
-      .map(pu => ({
-        id: pu.user.id,
-        name: pu.user.name
-      }))
+      .map(pu => toUserDto(pu.user))
 
     return updatedMembers
   }
@@ -214,7 +204,7 @@ export class ProjectsService {
     projectId: number,
     userLogged: UserLoggedDto,
     userId: number
-  ): Promise<MembersDto[]> {
+  ): Promise<UserDto[]> {
     const project = await this.projectsRepository.findOne({
       where: [
         {
@@ -257,10 +247,7 @@ export class ProjectsService {
 
     const updatedMembers = project.projectUsers
       .filter(pu => pu.user.id != userId)
-      .map(pu => ({
-        id: pu.user.id,
-        name: pu.user.name
-      }))
+      .map(v => toUserDto(v.user))
 
     return updatedMembers
   }

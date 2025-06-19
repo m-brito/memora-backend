@@ -24,11 +24,11 @@ import { ProjectsService } from '../services/projects.service'
 import { UserLoggedDto } from 'src/auth/dto'
 import {
   CreateProjectDto,
-  MembersDto,
   ProjectDto,
   ShareProjectDto,
   UpdateProjectDto
 } from '../dtos'
+import { UserDto } from '@users/dtos/user.dto'
 
 @Controller('projects')
 @UseGuards(JwtAuthGuard, WithAuthenticationGuard)
@@ -57,7 +57,7 @@ export class ProjectsController {
   async findMembers(
     @Param('id') id: number,
     @CurrentUser() user: UserLoggedDto
-  ): Promise<MembersDto[]> {
+  ): Promise<UserDto[]> {
     return this.projectsService.findMembers(id, user)
   }
 
@@ -65,7 +65,7 @@ export class ProjectsController {
   async exit(
     @Param('id') id: number,
     @CurrentUser() user: UserLoggedDto
-  ): Promise<MembersDto[]> {
+  ): Promise<UserDto[]> {
     return this.projectsService.exit(id, user)
   }
 
@@ -74,7 +74,7 @@ export class ProjectsController {
     @Param('id') id: number,
     @Param('userId') userId: number,
     @CurrentUser() user: UserLoggedDto
-  ): Promise<MembersDto[]> {
+  ): Promise<UserDto[]> {
     return this.projectsService.removeUser(id, user, userId)
   }
 
