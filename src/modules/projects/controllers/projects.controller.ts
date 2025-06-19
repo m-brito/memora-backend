@@ -69,6 +69,15 @@ export class ProjectsController {
     return this.projectsService.exit(id, user)
   }
 
+  @Post(':id/remove/:userId')
+  async removeUser(
+    @Param('id') id: number,
+    @Param('userId') userId: number,
+    @CurrentUser() user: UserLoggedDto
+  ): Promise<MembersDto[]> {
+    return this.projectsService.removeUser(id, user, userId)
+  }
+
   @Get()
   async findAllByUser(
     @CurrentUser() user: UserLoggedDto

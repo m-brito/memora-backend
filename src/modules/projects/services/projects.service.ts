@@ -210,6 +210,61 @@ export class ProjectsService {
     return updatedMembers
   }
 
+  async removeUser(
+    projectId: number,
+    userLogged: UserLoggedDto,
+    userId: number
+  ): Promise<MembersDto[]> {
+    const project = await this.projectsRepository.findOne({
+      where: [
+        {
+          id: projectId,
+          user: { id: userLogged.userId }
+        },
+        {
+          id: projectId,
+          projectUsers: {
+            user: { id: userLogged.userId }
+          }
+        }
+      ],
+      relations: ['user', 'projectUsers', 'projectUsers.user']
+    })
+
+    if (!project) {
+      throw new HttpException('Project not found', HttpStatus.NOT_FOUND)
+    }
+
+    if (project.user.id !== userLogged.userId) {
+      throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED)
+    }
+
+    const projectUser = await this.projectUserRepository.findOne({
+      where: {
+        project: { id: projectId },
+        user: { id: userId }
+      }
+    })
+
+    if (!projectUser) {
+      throw new HttpException(
+        'User is not a member of this project',
+        HttpStatus.NOT_FOUND
+      )
+    }
+
+    await this.projectUserRepository.delete(projectUser.id)
+
+    const updatedMembers = project.projectUsers
+      .filter(pu => pu.user.id != userId)
+      .map(pu => ({
+        id: pu.user.id,
+        name: pu.user.name
+      }))
+
+    return updatedMembers
+  }
+
   async findAll(): Promise<Project[]> {
     return await this.projectsRepository.find({
       relations: ['user']
