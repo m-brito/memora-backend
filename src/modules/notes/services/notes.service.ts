@@ -142,7 +142,7 @@ export class NotesService {
       text: updateNoteDto.text ?? note.text,
       textMarkdown: updateNoteDto.textMarkdown ?? note.textMarkdown,
       type: type ?? note.type,
-      project: project ?? note.project
+      project: note.project
     }
 
     await this.noteRepository.update(id, updatedNote)
