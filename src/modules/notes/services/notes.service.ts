@@ -141,7 +141,7 @@ export class NotesService {
       ...note,
       text: updateNoteDto.text ?? note.text,
       textMarkdown: updateNoteDto.textMarkdown ?? note.textMarkdown,
-      type: type ?? note.type,
+      type: note.type,
       project: note.project
     }
 
